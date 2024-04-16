@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.bsu.cs.finalproject.ConnectionTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2023-12-07T18:39:57" hostname="Campbells-MacBook-Pro.local" time="0.359">
+  <properties/>
+  <testcase name="testWeatherConnect()" classname="edu.bsu.cs.finalproject.ConnectionTest" time="0.359">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Can't find API key.
+]]></system-err>
+</testsuite>
