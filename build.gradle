@@ -6,7 +6,7 @@ plugins {
     id 'org.beryx.jlink' version '2.25.0'
 }
 
-group 'edu.bsu.cs222.finalproject'
+group 'edu.bsu.cs.finalproject'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -24,7 +24,6 @@ tasks.withType(JavaCompile).configureEach {
 application {
     mainModule = 'edu.bsu.cs.finalproject'
     mainClass = 'edu.bsu.cs.finalproject.WeatherApp'
-
 }
 
 javafx {
@@ -33,13 +32,24 @@ javafx {
 }
 
 dependencies {
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'org.json:json:20231013'
     implementation 'org.apache.logging.log4j:log4j-api:2.21.1'
     implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
+}
 
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+       test {
+        resources {
+            srcDir 'src/test/resources'
+        }
+       }
 }
 
 test {
@@ -47,7 +57,6 @@ test {
 }
 
 jlink {
-
     launcher {
         name = 'app'
     }
