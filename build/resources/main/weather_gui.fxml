@@ -33,7 +33,17 @@
                     <Font size="14.0"/>
                 </font>
             </TextField>
+            <TextField fx:id="Api_key" prefHeight="36.0" prefWidth="226.0" promptText="Enter Api Key">
+                <font>
+                    <Font size="14.0"/>
+                </font>
 
+            </TextField>
+            <Button onAction="#api_key_file_creator" prefHeight="72.0" prefWidth="12" text="api key loader">
+                <font>
+                    <Font name="System Bold" size="14.0"/>
+                </font>
+            </Button>
             <ComboBox fx:id="comboBox" prefHeight="36.0" prefWidth="109.0" promptText="Default">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

@@ -14,12 +14,14 @@ public class WeatherApp extends Application {
     public void start(Stage stage) {
 
         try {
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/weather_gui.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setTitle("Weather Application");
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
 
             logger.error("An I/O exception has occurred. :(");
@@ -36,6 +38,7 @@ public class WeatherApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
     }
 
 

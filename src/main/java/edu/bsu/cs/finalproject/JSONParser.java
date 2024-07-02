@@ -303,8 +303,5 @@ public class JSONParser {
             return true;
         }
     }
-    public static void main(String[] args) {
-        System.out.println("test");
 
-    }
 }
