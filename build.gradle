@@ -39,18 +39,7 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDir 'src/main/resources'
-        }
-    }
-       test {
-        resources {
-            srcDir 'src/test/resources'
-        }
-       }
-}
+
 
 test {
     useJUnitPlatform()
