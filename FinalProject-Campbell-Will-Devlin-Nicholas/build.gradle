@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.javamodularity.moduleplugin' version '1.8.12'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.jlink' version '2.25.0'
+}
+
+group 'edu.bsu.cs.finalproject'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'edu.bsu.cs.finalproject'
+    mainClass = 'edu.bsu.cs.finalproject.WeatherApp'
+}
+
+javafx {
+    version = '19.0.2'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'org.json:json:20231013'
+    implementation 'org.apache.logging.log4j:log4j-api:2.21.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
+}
+
+
+
+test {
+    useJUnitPlatform()
+}
+
+jlink {
+    launcher {
+        name = 'app'
+    }
+}
+
+jlinkZip {
+    group = 'distribution'
+}
