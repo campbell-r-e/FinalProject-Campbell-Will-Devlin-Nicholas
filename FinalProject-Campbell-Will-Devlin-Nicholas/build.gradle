@@ -1,9 +1,8 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'org.beryx.jlink' version '2.25.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group 'edu.bsu.cs.finalproject'
@@ -13,44 +12,76 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    junitVersion = '5.9.2'
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-application {
-    mainModule = 'edu.bsu.cs.finalproject'
-    mainClass = 'edu.bsu.cs.finalproject.WeatherApp'
-}
-
-javafx {
-    version = '21' 
-    modules = ['javafx.controls', 'javafx.fxml']
-}
-
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'org.json:json:20231013'
     implementation 'org.apache.logging.log4j:log4j-api:2.21.1'
     implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
+
+    // ✅ Use JavaFX 11 instead of 21
+    implementation 'org.openjfx:javafx-controls:11'
+    implementation 'org.openjfx:javafx-fxml:11'
+    implementation 'org.openjfx:javafx-base:11'
+    implementation 'org.openjfx:javafx-graphics:11'
+
+    // ✅ Include platform-specific dependencies (Ensures it works on macOS)
+    implementation "org.openjfx:javafx-controls:11:mac"
+    implementation "org.openjfx:javafx-fxml:11:mac"
+    implementation "org.openjfx:javafx-base:11:mac"
+    implementation "org.openjfx:javafx-graphics:11:mac"
+
+    // ✅ Add JUnit test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 }
 
-
-
-test {
-    useJUnitPlatform()
-}
-
-jlink {
-    launcher {
-        name = 'app'
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(22))
     }
 }
 
-jlinkZip {
-    group = 'distribution'
+application {
+    mainClass = 'edu.bsu.cs.finalproject.WeatherApp'
 }
+
+// ✅ **Ensure JavaFX is Fully Bundled in the Fat JAR**
+tasks.register('guiJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    archiveClassifier.set('gui')
+    manifest {
+        attributes 'Main-Class': 'edu.bsu.cs.finalproject.WeatherApp'
+    }
+    from sourceSets.main.output
+    configurations = [project.configurations.runtimeClasspath]
+
+    // ✅ Ensure JavaFX dependencies are included
+    dependencies {
+        include(dependency("org.openjfx:.*"))
+    }
+    mergeServiceFiles()
+}
+
+// ✅ CLI JAR
+tasks.register('cliJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    archiveClassifier.set('cli')
+    manifest {
+        attributes 'Main-Class': 'edu.bsu.cs.finalproject.ConsoleEntryPoint'
+    }
+    from sourceSets.main.output
+    configurations = [project.configurations.runtimeClasspath]
+
+    dependencies {
+        include(dependency("org.openjfx:.*"))
+    }
+    mergeServiceFiles()
+}
+
+// ✅ Ensure Tests Run Separately from Shadow JAR
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+// Build both JARs
+tasks.build.dependsOn(guiJar, cliJar)
