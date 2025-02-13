@@ -5,8 +5,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 
+
 public class Connection {
-    private static String apiKey; // Store API key
+    public static String apiKey; // Store API key
+    public Connection(String key){
+     apiKey=key;
+    }
+    
 
     public static String weatherConnect(String zip_code) {
         ensureApiKey();

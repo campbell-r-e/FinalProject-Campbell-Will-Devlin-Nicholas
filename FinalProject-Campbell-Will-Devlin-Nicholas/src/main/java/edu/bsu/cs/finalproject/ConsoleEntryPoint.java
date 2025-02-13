@@ -7,8 +7,14 @@ public class ConsoleEntryPoint
 {
     public static void main(String[] args)
     {
+       
+        
+        
+      
         Scanner command_line_user_interface_tool = new Scanner(System.in);
         Logic controller = new Logic();
+        System.out.println("Enter the API key");
+        Connection.apiKey=command_line_user_interface_tool.nextLine();
         System.out.println("Enter your zip code");
         String zip_code =  command_line_user_interface_tool.nextLine();
         System.out.println("Enter \"c\" for Celsius or \"f\" for Fahrenheit: or Enter \"fc\" to print Fahrenheit and Celsius.\n Enter \"for\" to get the forecast for three days.");
