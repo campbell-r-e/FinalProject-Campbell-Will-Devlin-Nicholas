@@ -20,11 +20,8 @@ We used several external libraries as shown in the build.gradle file. Java 20 an
 1) Go to WeatherAPI.com and create an account to get an API key so that you can run the program.
 2) Remember the API key for later.
 3) Pull the project from github using an intleij by using the get from VCS option.
-4) Once the project has been pulled you need to create a resource Directory under the Java directory by right clicking and choosing the option to create a resource Directory.
-5) Now you need to create a file called api_key.txt
-6) After you create the file you need to paste the API key from earlier into the file with no spacing before the text.
-7) Next you can run the program by selecting the WeatherApp class and then you will click the play button next to the code to run it.
-8) After you select the play button you will need to input the information for the questions asked. (If the API key is not found it will tell you the key was not found)
+4) Next you can run the program by selecting the WeatherApp class and then you will click the play button next to the code to run it.
+5) After you select the play button you will need to input the information for the questions asked. The program will now ask for you to enter your API Key.
 
 ## Functional Requirements
 1) As a landscaper, I want to know what the current temperature is in my location so I can wear a hat and gloves if needed.
